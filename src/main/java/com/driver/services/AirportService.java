@@ -34,11 +34,11 @@ public class AirportService {
                 min=airport.getNoOfTerminals();
                 str=airport.getAirportName();
             }
-//            else if (min==airport.getNoOfTerminals()) {
-//                int check=str.compareTo(airport.getAirportName());
-//                if(check>0){
-//                    str=airport.getAirportName();
-//                }
+            else if (min==airport.getNoOfTerminals()) {
+                int check=str.compareTo(airport.getAirportName());
+                if(check<0){
+                    str=airport.getAirportName();
+                }
 //            }
         }
         return str;
