@@ -3,12 +3,10 @@ package com.driver.repository;
 import com.driver.model.Airport;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class AirportRepository {
@@ -18,6 +16,9 @@ public class AirportRepository {
     Map<Integer , Flight>flightMap=new HashMap<>();
     List<Flight> flightList=new ArrayList<>();
     Map<Integer , Passenger>passengerMap=new HashMap<>();
+
+    Map<Integer,List<Integer>> flightPassenger=new HashMap<>();
+    Map<Integer,List<Integer>> passengerWithFlightsMap =new HashMap();
     public void addAirport(Airport airport) {
         String name=airport.getAirportName();
         airportList.add(airport);
@@ -41,5 +42,47 @@ public class AirportRepository {
 
     public List<Flight> getAllFlight() {
         return flightList;
+    }
+
+    public String bookTicket(Integer flightId, Integer passengerId) {
+        List<Integer> listOfFilghtsWithPasenger=passengerWithFlightsMap.getOrDefault(passengerId,new ArrayList<>());
+        listOfFilghtsWithPasenger.add(flightId);
+        passengerWithFlightsMap.put(passengerId,listOfFilghtsWithPasenger);
+
+        Flight flight=flightMap.get(flightId);
+        List<Integer> listOfPassenger=flightPassenger.getOrDefault(flightId,new ArrayList<>());
+        if (flight.getMaxCapacity()==listOfPassenger.size())return "FAILURE";
+
+        listOfPassenger.add(passengerId);
+        flightPassenger.put(flightId,listOfPassenger);
+        return "SUCCESS";
+    }
+
+    public String cancelATicket(Integer flightId, Integer passengerId) {
+        Set<Integer> flightIds = flightMap.keySet();
+        Set<Integer> passengersIds = passengerMap.keySet();
+        if(!flightIds.contains(flightId)) return "FAILURE";
+        if(!passengersIds.contains(passengerId)) return "FAILURE";
+
+        if (!passengerWithFlightsMap.containsKey(passengerId)) {
+            return "FAILURE";
+        }
+        if(passengerWithFlightsMap.containsKey(passengerId)){
+            List<Integer> listOfFlightsWithPassenger=passengerWithFlightsMap.get(passengerId);
+            if(!listOfFlightsWithPassenger.contains(flightId)) return "FAILURE";
+            listOfFlightsWithPassenger.remove(flightId);
+            passengerWithFlightsMap.put(passengerId,listOfFlightsWithPassenger);
+        }
+
+        List<Integer> listOfBookedTicked=flightPassenger.get(flightId);
+        if(!listOfBookedTicked.contains(passengerId)) return "FAILURE";
+        listOfBookedTicked.remove(passengerId);
+        flightPassenger.put(flightId,listOfBookedTicked);
+        return "SUCCESS";
+
+    }
+
+    public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId) {
+        return passengerWithFlightsMap.get(passengerId).size();
     }
 }

@@ -74,8 +74,8 @@ public class AirportController {
         //return a String "FAILURE"
         //Also if the passenger has already booked a flight then also return "FAILURE".
         //else if you are able to book a ticket then return "SUCCESS"
-
-        return null;
+       String ticketStatus= airportService.bookTicket(flightId,passengerId);
+        return ticketStatus;
     }
 
     @PutMapping("/cancel-a-ticket")
@@ -85,8 +85,7 @@ public class AirportController {
         // then return a "FAILURE" message
         // Otherwise return a "SUCCESS" message
         // and also cancel the ticket that passenger had booked earlier on the given flightId
-
-       return null;
+        return airportService.cancelATicket(flightId,passengerId);
     }
 
 
@@ -94,7 +93,7 @@ public class AirportController {
     public int countOfBookingsDoneByPassengerAllCombined(@PathVariable("passengerId")Integer passengerId){
 
         //Tell the count of flight bookings done by a passenger: This will tell the total count of flight bookings done by a passenger :
-       return 0;
+       return airportService.countOfBookingsDoneByPassengerAllCombined(passengerId);
     }
 
     @PostMapping("/add-flight")
