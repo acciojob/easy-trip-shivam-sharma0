@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public class AirportService {
 
-    @Autowired
-    private static AirportRepository airportRepository;
+    private static AirportRepository airportRepository =new AirportRepository();
 
     public static void addAirport(Airport airport) {
         airportRepository.addAirport(airport);
