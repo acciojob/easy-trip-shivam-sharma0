@@ -36,7 +36,7 @@ public class AirportService {
             }
             else if (min==airport.getNoOfTerminals()) {
                 int check=str.compareTo(airport.getAirportName());
-                if(check<0){
+                if(check>0){
                     str=airport.getAirportName();
                 }
             }

@@ -47,13 +47,13 @@ public class AirportRepository {
     public String bookTicket(Integer flightId, Integer passengerId) {
         bookingCount.put(passengerId,bookingCount.getOrDefault(passengerId,0)+1);
 
-        List<Integer> listOfFilghtsWithPasenger=passengerWithFlightsMap.getOrDefault(passengerId,new ArrayList<>());
-        listOfFilghtsWithPasenger.add(flightId);
-        passengerWithFlightsMap.put(passengerId,listOfFilghtsWithPasenger);
-
         Flight flight=flightMap.get(flightId);
         List<Integer> listOfPassenger=flightPassenger.getOrDefault(flightId,new ArrayList<>());
         if (flight.getMaxCapacity()==listOfPassenger.size())return "FAILURE";
+
+        List<Integer> listOfFilghtsWithPasenger=passengerWithFlightsMap.getOrDefault(passengerId,new ArrayList<>());
+        listOfFilghtsWithPasenger.add(flightId);
+        passengerWithFlightsMap.put(passengerId,listOfFilghtsWithPasenger);
 
         listOfPassenger.add(passengerId);
         flightPassenger.put(flightId,listOfPassenger);
