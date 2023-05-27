@@ -18,6 +18,7 @@ public class AirportRepository {
 
     Map<Integer,List<Integer>> flightPassenger=new HashMap<>();
     Map<Integer,List<Integer>> passengerWithFlightsMap =new HashMap();
+    Map<Integer,Integer> bookingCount =new HashMap();
     public void addAirport(Airport airport) {
         String name=airport.getAirportName();
         airportList.add(airport);
@@ -44,6 +45,8 @@ public class AirportRepository {
     }
 
     public String bookTicket(Integer flightId, Integer passengerId) {
+        bookingCount.put(passengerId,bookingCount.getOrDefault(passengerId,0)+1);
+
         List<Integer> listOfFilghtsWithPasenger=passengerWithFlightsMap.getOrDefault(passengerId,new ArrayList<>());
         listOfFilghtsWithPasenger.add(flightId);
         passengerWithFlightsMap.put(passengerId,listOfFilghtsWithPasenger);
@@ -82,6 +85,6 @@ public class AirportRepository {
     }
 
     public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId) {
-        return passengerWithFlightsMap.get(passengerId).size();
+        return bookingCount.get(passengerId);
     }
 }
