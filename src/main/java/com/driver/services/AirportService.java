@@ -7,6 +7,7 @@ import com.driver.repository.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 public class AirportService {
@@ -66,5 +67,13 @@ public class AirportService {
 
     public int countOfBookingsDoneByPassengerAllCombined(Integer passengerId) {
         return airportRepository.countOfBookingsDoneByPassengerAllCombined(passengerId);
+    }
+
+    public int getNumberOfPeopleOn(Date date, String airportName) {
+        return airportRepository.getNumberOfPeopleOn(date,airportName);
+    }
+
+    public String getAirportNameFromFlightId(Integer flightId) {
+        return airportRepository.getAirportNameFromFlightId(flightId);
     }
 }

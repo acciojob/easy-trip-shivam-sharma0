@@ -1,6 +1,7 @@
 package com.driver.repository;
 
 import com.driver.model.Airport;
+import com.driver.model.City;
 import com.driver.model.Flight;
 import com.driver.model.Passenger;
 import io.swagger.models.auth.In;
@@ -93,5 +94,29 @@ public class AirportRepository {
             }
         }
         return count;
+    }
+
+    public int getNumberOfPeopleOn(Date date, String airportName) {
+        Airport airport=airportMap.get(airportName);
+        List<Flight> flights=new ArrayList<>(flightList);
+        int people=0;
+        for(Flight flight:flights){
+            if(flight.getFromCity().equals(airport.getCity()) || flight.getToCity().equals(airport.getCity()) && flight.getFlightDate().equals(date)){
+                people+=flight.getMaxCapacity();
+            }
+        }
+        return people;
+    }
+
+    public String getAirportNameFromFlightId(Integer flightId) {
+        Flight flight=flightMap.get(flightId);
+        City city=flight.getFromCity();
+        List<Airport> airports=new ArrayList<>(airportList);
+        for (Airport airport:airports){
+            if(city.equals(airport.getCity())){
+                return airport.getAirportName();
+            }
+        }
+        return null;
     }
 }

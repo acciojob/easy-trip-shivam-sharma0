@@ -1,7 +1,11 @@
 package com.driver.model;
 
-import java.util.Date;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.Date;
+@Getter
+@Setter
 public class Flight {
 
     private int flightId; //This is a unique key for a flight

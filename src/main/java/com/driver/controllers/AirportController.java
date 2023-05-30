@@ -46,11 +46,11 @@ public class AirportController {
 
     @GetMapping("/get-number-of-people-on-airport-on/{date}")
     public int getNumberOfPeopleOn(@PathVariable("date") Date date,@RequestParam("airportName")String airportName){
-
+          int totalNumber=airportService.getNumberOfPeopleOn(date,airportName);
         //Calculate the total number of people who have flights on that day on a particular airport
         //This includes both the people who have come for a flight and who have landed on an airport after their flight
 
-        return 0;
+        return totalNumber;
     }
 
     @GetMapping("/calculate-fare")
@@ -105,11 +105,11 @@ public class AirportController {
 
     @GetMapping("/get-aiportName-from-flight-takeoff/{flightId}")
     public String getAirportNameFromFlightId(@PathVariable("flightId")Integer flightId){
-
+         String name=airportService.getAirportNameFromFlightId(flightId);
         //We need to get the starting airportName from where the flight will be taking off (Hint think of City variable if that can be of some use)
         //return null incase the flightId is invalid or you are not able to find the airportName
 
-        return null;
+        return name;
     }
 
 
