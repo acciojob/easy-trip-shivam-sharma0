@@ -27,14 +27,14 @@ public class AirportService {
 
     public String getLargestAirportName() {
         List<Airport> allAirport=airportRepository.getAllAirport();
-        int min=-1;
-        String str="";
+        int max=0;
+        String str=allAirport.get(0).getAirportName();
         for (Airport airport:allAirport){
-            if(min<airport.getNoOfTerminals()){
-                min=airport.getNoOfTerminals();
+            if(max<airport.getNoOfTerminals()){
+                max=airport.getNoOfTerminals();
                 str=airport.getAirportName();
             }
-            else if (min==airport.getNoOfTerminals()) {
+              if (max==airport.getNoOfTerminals()) {
                 int check=str.compareTo(airport.getAirportName());
                 if(check>0){
                     str=airport.getAirportName();
